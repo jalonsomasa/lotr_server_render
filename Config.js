@@ -14,7 +14,7 @@ module.exports = Config;
  * @static
  * @const
  */
-Config.isDebugMode = true;
+Config.isDebugMode = false;
 
 /**
  * @type {httpServerUrl}
@@ -58,7 +58,7 @@ Config.init = function( chatServerPort )
     {
         //Config.httpServerUrl = "http://theprancingpony.epizy.com";
         Config.httpServerUrl = "http://theprancingpony.es";
-        Config.chatServerUrl = "https://lotr-server.herokuapp.com:" + chatServerPort.toString();
+        Config.chatServerUrl = "https://lotr-server.onrender.com:" + chatServerPort.toString();
         Config.amfPhpUrl = Config.httpServerUrl;
     }
     Config.amfPhpUrl += "/php/?contentType=application/json";

@@ -100,7 +100,7 @@ function onClientConnected( socket )
 	function pingServer()
 	{
 		const kGetOptions = {
-			host: "lotr-server.herokuapp.com",
+			host: "lotr-server.onrender.com/",
 			port: 80,
 			path: "/"  };
 		http.get( kGetOptions, function( res ) {
