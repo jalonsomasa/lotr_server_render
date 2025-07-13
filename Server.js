@@ -75,6 +75,7 @@ function onClientConnected( socket )
         user.userId = kUserId;
         user.socket = socket;
         DataModel.mapUserIdToUser.set( kUserId, user );
+        DataModel.mapUserIdToLoginTime.set( kUserId, Date.now() );
 
         socket.on( "disconnect", Utils.callAndCatchErrors.bind( this, onDisconnect, user ) );
         socket.on( "tryGameReconnection", Utils.callAndCatchErrors.bind( this, onTryGameReconnection, user ) );
@@ -87,7 +88,11 @@ function onClientConnected( socket )
     }
     else
     {
-        socket.emit( "connectionRejected", 0 );
+        if ( !DataModel.mapUserIdToLoginTime.has( kUserId )
+            || Date.now() - DataModel.mapUserIdToLoginTime.get( kUserId ) > 1000 )
+        {
+            socket.emit( "connectionRejected", 0 );
+        }
     }
 
     if ( !keepAliveTimer && !Config.isDebugMode )
@@ -100,7 +105,7 @@ function onClientConnected( socket )
 	function pingServer()
 	{
 		const kGetOptions = {
-			host: "lotr-server.onrender.com/",
+			host: "lotr-server.onrender.com",
 			port: 80,
 			path: "/"  };
 		http.get( kGetOptions, function( res ) {
@@ -137,6 +142,7 @@ function onClientConnected( socket )
         }
 
         DataModel.mapUserIdToUser.delete( myUser.userId );
+        DataModel.mapUserIdToLoginTime.delete( myUser.userId );
         socket.broadcast.emit( "userDisconnected", myUser.userId );
         console.log( "onDisconnect :: User disconnected: " + myUser.userId + " :: " + reason );
 

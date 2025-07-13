@@ -57,7 +57,7 @@ Config.init = function( chatServerPort )
     else
     {
         //Config.httpServerUrl = "http://theprancingpony.epizy.com";
-        Config.httpServerUrl = "http://theprancingpony.es";
+        Config.httpServerUrl = "https://theprancingpony.es";
         Config.chatServerUrl = "https://lotr-server.onrender.com:" + chatServerPort.toString();
         Config.amfPhpUrl = Config.httpServerUrl;
     }
