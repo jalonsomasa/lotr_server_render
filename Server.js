@@ -89,7 +89,7 @@ function onClientConnected( socket )
     else
     {
         if ( !DataModel.mapUserIdToLoginTime.has( kUserId )
-            || Date.now() - DataModel.mapUserIdToLoginTime.get( kUserId ) > 1000 )
+            || Date.now() - DataModel.mapUserIdToLoginTime.get( kUserId ) > 4000 )
         {
             socket.emit( "connectionRejected", 0 );
         }
